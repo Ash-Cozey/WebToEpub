@@ -19,7 +19,7 @@ class PatreonParser extends Parser {
 
     getCollectionLinks(dom) {
         let getTitle = (e) => {
-            return [...e.querySelectorAll("span.LineClamp-module__N_eOMG__lineClamp1")]
+            return [...e.querySelectorAll("span.N_eOMG_lineClamp1")]
                 .map(s => s.textContent.trim())
                 .join(" ");
         };
@@ -30,7 +30,7 @@ class PatreonParser extends Parser {
                 return e.querySelector("a");
             };
             // The SVG check skips all locked chapters.
-            let linksContainer = [...dom.querySelectorAll("div.ListPost-module__d2AM5a__listPost:not(:has(svg[data-tag='IconLock']))")];
+            let linksContainer = [...dom.querySelectorAll("div.d2AM5a_listPost:not(:has(svg[data-tag='IconLock']))")];
             return linksContainer.map(linkContainer => {
                 return {
                     sourceUrl: getLink(linkContainer).href,
@@ -38,9 +38,9 @@ class PatreonParser extends Parser {
                 };
             });
         }
-        
+
         // The SVG check skips all locked chapters.
-        let links = [...dom.querySelectorAll("a.CollectionPostList-module__IhO0fW__gridCard:not(:has(svg[data-tag='IconLock']))")];
+        let links = [...dom.querySelectorAll("a.IhO0fW_gridCard:not(:has(svg[data-tag='IconLock']))")];
         return links.map(link => ({
             sourceUrl: link.href,
             title: getTitle(link),
@@ -60,7 +60,7 @@ class PatreonParser extends Parser {
         let link = this.getUrlOfContent(card);
         return !util.isNullOrEmpty(link?.getAttribute("href"));
     }
- 
+
     getUrlOfContent(card) {
         return card.querySelector("a[data-tag='post-published-at']");
     }
@@ -226,14 +226,14 @@ class PatreonParser extends Parser {
                         }
                         break;
 
-                    case "heading": 
+                    case "heading":
                         element = document.createElement(`h${node.attrs.level || 3}`);
                         break;
 
                     case "bulletList":
                         element = document.createElement("ul");
                         break;
-                    
+
                     case "orderedList":
                         element = document.createElement("ol");
                         break;
@@ -242,7 +242,7 @@ class PatreonParser extends Parser {
                         element = document.createElement("li");
                         break;
 
-                    case "image": 
+                    case "image":
                         element = document.createElement("img");
                         element.src = node.attrs.src;
                         element.alt = node.attrs.alt || "";
@@ -251,7 +251,7 @@ class PatreonParser extends Parser {
                     case "blockquote":
                         element = document.createElement("blockquote");
                         break;
-                    
+
                     case "codeBlock": {
                         let pre = document.createElement("pre");
                         element = document.createElement("code");
