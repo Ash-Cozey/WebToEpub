@@ -23,8 +23,8 @@ class PatreonParser extends Parser {
         let getTitle = (link) => {
             if (this.isCondensedView(dom)) {
                 let title = [...link.querySelectorAll("[class*='lineClamp1']")]
-                .map(s => s.textContent.trim())
-                .join(" ");
+                    .map(s => s.textContent.trim())
+                    .join(" ");
                 return title;
             }
             let heading = link.querySelector("h1, h2, h3, h4, [data-tag='post-title']");
