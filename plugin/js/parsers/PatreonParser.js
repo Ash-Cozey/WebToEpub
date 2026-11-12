@@ -21,15 +21,17 @@ class PatreonParser extends Parser {
         // Patreon's generated CSS class names change often, so find posts
         // by their /posts/ links and match classes by stable fragments only.
         let getTitle = (link) => {
-            let title = [...link.querySelectorAll("[class*='lineClamp1']")]
+            if (this.isCondensedView(dom)) {
+                let title = [...link.querySelectorAll("[class*='lineClamp1']")]
                 .map(s => s.textContent.trim())
                 .join(" ");
-            if (title === "") {
-                let heading = link.querySelector("h1, h2, h3, h4, [data-tag='post-title']");
-                title = (heading ?? link).textContent.trim();
+                return title;
             }
+            let heading = link.querySelector("h1, h2, h3, h4, [data-tag='post-title']");
+            let title = (heading ?? link).textContent.trim();
             return title;
         };
+        
         // Locked posts have an IconLock SVG inside the link or its row.
         let isLocked = (link) => {
             let row = link.parentElement;
